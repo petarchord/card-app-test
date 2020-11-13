@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 const AddCard = () => {
   const history = useHistory();
 
+  const selectRef = useRef();
   const userNameRef = useRef();
   const firstDigitsRef = useRef();
   const secondDigitsRef = useRef();
@@ -15,7 +16,11 @@ const AddCard = () => {
 
   const addCardSubmit = (e) => {
     e.preventDefault();
+    console.log("selected:", selectRef.current);
+
+    const id = firstDigits + secondDigits + thirdDigits + fourthDigits;
     const cardData = {
+      id,
       cardType,
       userName,
       firstDigits,
@@ -133,6 +138,20 @@ const AddCard = () => {
               }}
               required
             />
+          </div>
+          <div className={styles.input_holder}>
+            <label htmlFor="tpye of card">Select the type of card</label>
+            <select
+              name="card_type"
+              ref={selectRef}
+              onChange={(e) => {
+                setCardType(e.target.value);
+              }}
+            >
+              <option value={0}>Visa</option>
+              <option value={1}>Mastercard</option>
+              <option value={2}>Discover</option>
+            </select>
           </div>
 
           <input type="submit" value="Save" id={styles.submit_btn} />
