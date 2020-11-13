@@ -6,13 +6,12 @@ function App() {
   return (
 
     <Router>
-<div className={styles.container}>
+      <div className={styles.container}>
       <Switch>
         <Route path="/" exact component={Cards} />
         <Route path="/cards/add" component={AddCard} />
       </Switch>
-      <Cards />
-      <AddCard />
+      
     </div>
     </Router>
     

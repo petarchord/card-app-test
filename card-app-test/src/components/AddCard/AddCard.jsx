@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
 import Card from "../Card/Card";
 import styles from "./AddCard.module.scss";
+import { useHistory } from "react-router-dom";
 
 const AddCard = () => {
+  const history = useHistory();
+
   const userNameRef = useRef();
   const firstDigitsRef = useRef();
   const secondDigitsRef = useRef();
@@ -23,6 +26,7 @@ const AddCard = () => {
     };
 
     localStorage.setItem("cardData", JSON.stringify(cardData));
+    history.push("/");
   };
 
   const changeCardType = () => {

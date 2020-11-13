@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./Cards.module.scss";
 import Card from "../Card/Card";
+import { useHistory } from "react-router-dom";
 
 const Cards = () => {
+  const history = useHistory();
   const renderAvailableCard = () => {
     if (localStorage.getItem("cardData")) {
       const {
@@ -34,7 +36,12 @@ const Cards = () => {
       {renderAvailableCard() ? (
         ""
       ) : (
-        <div className={styles.add_card}>
+        <div
+          className={styles.add_card}
+          onClick={() => {
+            history.push("/cards/add");
+          }}
+        >
           <p>+</p>
         </div>
       )}
