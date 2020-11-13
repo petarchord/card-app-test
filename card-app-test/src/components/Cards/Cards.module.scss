@@ -1,5 +1,10 @@
 .container {
   text-align: center;
+
+  .cards_holder {
+    display: flex;
+  }
+
   .add_card {
     width: 400px;
     margin: 0 auto;
