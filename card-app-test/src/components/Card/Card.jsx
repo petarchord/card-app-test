@@ -40,13 +40,7 @@ const Card = ({
   };
 
   return (
-    <div
-      className={styles.add_card}
-      onClick={() => {
-        const id = firstDigits + secondDigits + thirdDigits + fourthDigits;
-        history.push(`/cards/${id}/edit`);
-      }}
-    >
+    <div className={styles.add_card}>
       <img src={chip_img} alt="chip image" />
       <img src={checkCardType()} alt="card tpye image" />
       <div className={styles.digits_holder}>

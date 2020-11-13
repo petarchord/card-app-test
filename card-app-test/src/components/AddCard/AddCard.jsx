@@ -12,9 +12,19 @@ const AddCard = () => {
   const fourthDigitsRef = useRef();
   const expDateRef = useRef();
 
+  const validateDigits = () => {
+    const firstDigit = parseInt(firstDigits.split("")[0]);
+    if (firstDigit === 4 || firstDigit === 5 || firstDigit === 6) {
+      return true;
+    } else {
+      setCardNumberError(true);
+      return false;
+    }
+  };
+
   const addCardSubmit = (e) => {
     e.preventDefault();
-
+    if (!validateDigits()) return;
     const id = firstDigits + secondDigits + thirdDigits + fourthDigits;
     const cardData = {
       id,
@@ -32,6 +42,7 @@ const AddCard = () => {
   };
 
   const [cardType, setCardType] = useState(0); //0-visa 1-master 2-discover
+  const [cardNumberError, setCardNumberError] = useState(false);
   const [firstDigits, setFirstDigits] = useState("0000");
   const [secondDigits, setSecondDigits] = useState("0000");
   const [thirdDigits, setThirdDigits] = useState("0000");
@@ -116,6 +127,7 @@ const AddCard = () => {
                 required
               />
             </div>
+            {cardNumberError ? <p>Wrong card number</p> : ""}
           </div>
           <div className={styles.input_holder}>
             <label htmlFor="expiration date">Expires on</label>

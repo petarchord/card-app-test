@@ -17,15 +17,26 @@ const Cards = () => {
         expDate,
       } = JSON.parse(localStorage.getItem("cardData"));
       return (
-        <Card
-          cardType={cardType}
-          userName={userName}
-          firstDigits={firstDigits}
-          secondDigits={secondDigits}
-          thirdDigits={thirdDigits}
-          fourthDigits={fourthDigits}
-          expDate={expDate}
-        />
+        <div>
+          <Card
+            cardType={cardType}
+            userName={userName}
+            firstDigits={firstDigits}
+            secondDigits={secondDigits}
+            thirdDigits={thirdDigits}
+            fourthDigits={fourthDigits}
+            expDate={expDate}
+          />
+          <button
+            onClick={() => {
+              const id =
+                firstDigits + secondDigits + thirdDigits + fourthDigits;
+              history.push(`/cards/${id}/edit`);
+            }}
+          >
+            Edit current card
+          </button>
+        </div>
       );
     }
   };
