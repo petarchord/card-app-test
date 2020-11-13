@@ -1,9 +1,7 @@
 import React, { useState, useRef } from "react";
+import Card from "../Card/Card";
 import styles from "./AddCard.module.scss";
-import chip_img from "../../assets/chip.png";
-import visa_img from "../../assets/visa.png";
-import master_img from "../../assets/master.png";
-import discover_img from "../../assets/discover.png";
+
 const AddCard = () => {
   const userNameRef = useRef();
   const firstDigitsRef = useRef();
@@ -11,20 +9,20 @@ const AddCard = () => {
   const thirdDigitsRef = useRef();
   const fourthDigitsRef = useRef();
   const expDateRef = useRef();
-  const checkCardType = () => {
-    switch (cardType) {
-      case 0: {
-        return visa_img;
-      }
-      case 1: {
-        return master_img;
-      }
-      case 2: {
-        return discover_img;
-      }
-      default:
-        return visa_img;
-    }
+
+  const addCardSubmit = (e) => {
+    e.preventDefault();
+    const cardData = {
+      cardType,
+      userName,
+      firstDigits,
+      secondDigits,
+      thirdDigits,
+      fourthDigits,
+      expDate,
+    };
+
+    localStorage.setItem("cardData", JSON.stringify(cardData));
   };
 
   const changeCardType = () => {
@@ -45,64 +43,29 @@ const AddCard = () => {
   return (
     <div className={styles.container}>
       <h3>Add card to account</h3>
-      <div className={styles.add_card}>
-        <img src={chip_img} alt="chip image" />
-        <img
-          src={checkCardType()}
-          alt="visa image"
-          onClick={() => {
-            changeCardType();
-          }}
-        />
-        <div className={styles.digits_holder}>
-          <p
-            onClick={() => {
-              firstDigitsRef.current.focus();
-            }}
-          >
-            {firstDigits}
-          </p>
-          <p
-            onClick={() => {
-              secondDigitsRef.current.focus();
-            }}
-          >
-            {secondDigits}
-          </p>
-          <p
-            onClick={() => {
-              thirdDigitsRef.current.focus();
-            }}
-          >
-            {thirdDigits}
-          </p>
-          <p
-            onClick={() => {
-              fourthDigitsRef.current.focus();
-            }}
-          >
-            {fourthDigits}
-          </p>
-        </div>
-        <div className={styles.name_expdate_holder}>
-          <p
-            onClick={() => {
-              userNameRef.current.focus();
-            }}
-          >
-            {userName}
-          </p>
-          <p
-            onClick={() => {
-              expDateRef.current.focus();
-            }}
-          >
-            {expDate}
-          </p>
-        </div>
-      </div>
+      <Card
+        cardType={cardType}
+        setCardType={setCardType}
+        userName={userName}
+        firstDigits={firstDigits}
+        secondDigits={secondDigits}
+        thirdDigits={thirdDigits}
+        fourthDigits={fourthDigits}
+        expDate={expDate}
+        userNameRef={userNameRef}
+        firstDigitsRef={firstDigitsRef}
+        secondDigitsRef={secondDigitsRef}
+        thirdDigitsRef={thirdDigitsRef}
+        fourthDigitsRef={fourthDigitsRef}
+        expDateRef={expDateRef}
+      />
+
       <div>
-        <form>
+        <form
+          onSubmit={(e) => {
+            addCardSubmit(e);
+          }}
+        >
           <div className={styles.input_holder}>
             <label htmlFor="name">Name</label>
             <input
@@ -112,6 +75,7 @@ const AddCard = () => {
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
+              required
             />
           </div>
           <div className={styles.input_holder}>
@@ -124,6 +88,7 @@ const AddCard = () => {
                 onChange={(e) => {
                   setFirstDigits(e.target.value);
                 }}
+                required
               />
               <input
                 ref={secondDigitsRef}
@@ -132,6 +97,7 @@ const AddCard = () => {
                 onChange={(e) => {
                   setSecondDigits(e.target.value);
                 }}
+                required
               />
               <input
                 ref={thirdDigitsRef}
@@ -140,6 +106,7 @@ const AddCard = () => {
                 onChange={(e) => {
                   setThirdDigits(e.target.value);
                 }}
+                required
               />
               <input
                 ref={fourthDigitsRef}
@@ -148,6 +115,7 @@ const AddCard = () => {
                 onChange={(e) => {
                   setFourthDigits(e.target.value);
                 }}
+                required
               />
             </div>
           </div>
@@ -159,6 +127,7 @@ const AddCard = () => {
               onChange={(e) => {
                 setExpDate(e.target.value);
               }}
+              required
             />
           </div>
 
