@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./AddCard.module.scss";
 import chip_img from "../../assets/chip.png";
 import visa_img from "../../assets/visa.png";
 import master_img from "../../assets/master.png";
-import discover_img from "../../assets/master.png";
+import discover_img from "../../assets/discover.png";
 const AddCard = () => {
+  const userNameRef = useRef();
+  const firstDigitsRef = useRef();
+  const secondDigitsRef = useRef();
+  const thirdDigitsRef = useRef();
+  const fourthDigitsRef = useRef();
+  const expDateRef = useRef();
   const checkCardType = () => {
     switch (cardType) {
       case 0: {
@@ -21,6 +27,14 @@ const AddCard = () => {
     }
   };
 
+  const changeCardType = () => {
+    if (cardType < 3) {
+      setCardType(cardType + 1);
+    } else {
+      setCardType(0);
+    }
+  };
+
   const [cardType, setCardType] = useState(0); //0-visa 1-master 2-discover
   const [firstDigits, setFirstDigits] = useState("0000");
   const [secondDigits, setSecondDigits] = useState("0000");
@@ -33,16 +47,58 @@ const AddCard = () => {
       <h3>Add card to account</h3>
       <div className={styles.add_card}>
         <img src={chip_img} alt="chip image" />
-        <img src={checkCardType()} alt="visa image" />
+        <img
+          src={checkCardType()}
+          alt="visa image"
+          onClick={() => {
+            changeCardType();
+          }}
+        />
         <div className={styles.digits_holder}>
-          <p>{firstDigits}</p>
-          <p>{secondDigits}</p>
-          <p>{thirdDigits}</p>
-          <p>{fourthDigits}</p>
+          <p
+            onClick={() => {
+              firstDigitsRef.current.focus();
+            }}
+          >
+            {firstDigits}
+          </p>
+          <p
+            onClick={() => {
+              secondDigitsRef.current.focus();
+            }}
+          >
+            {secondDigits}
+          </p>
+          <p
+            onClick={() => {
+              thirdDigitsRef.current.focus();
+            }}
+          >
+            {thirdDigits}
+          </p>
+          <p
+            onClick={() => {
+              fourthDigitsRef.current.focus();
+            }}
+          >
+            {fourthDigits}
+          </p>
         </div>
         <div className={styles.name_expdate_holder}>
-          <p>{userName}</p>
-          <p>{expDate}</p>
+          <p
+            onClick={() => {
+              userNameRef.current.focus();
+            }}
+          >
+            {userName}
+          </p>
+          <p
+            onClick={() => {
+              expDateRef.current.focus();
+            }}
+          >
+            {expDate}
+          </p>
         </div>
       </div>
       <div>
@@ -50,6 +106,7 @@ const AddCard = () => {
           <div className={styles.input_holder}>
             <label htmlFor="name">Name</label>
             <input
+              ref={userNameRef}
               type="text"
               name="name"
               onChange={(e) => {
@@ -61,6 +118,7 @@ const AddCard = () => {
             <label htmlFor="Card Number">Card Number</label>
             <div className={styles.digits_input_holder}>
               <input
+                ref={firstDigitsRef}
                 type="text"
                 name="first_digits"
                 onChange={(e) => {
@@ -68,6 +126,7 @@ const AddCard = () => {
                 }}
               />
               <input
+                ref={secondDigitsRef}
                 type="text"
                 name="second_digits"
                 onChange={(e) => {
@@ -75,6 +134,7 @@ const AddCard = () => {
                 }}
               />
               <input
+                ref={thirdDigitsRef}
                 type="text"
                 name="third_digits"
                 onChange={(e) => {
@@ -82,6 +142,7 @@ const AddCard = () => {
                 }}
               />
               <input
+                ref={fourthDigitsRef}
                 type="text"
                 name="fourth_digits"
                 onChange={(e) => {
@@ -93,6 +154,7 @@ const AddCard = () => {
           <div className={styles.input_holder}>
             <label htmlFor="expiration date">Expires on</label>
             <input
+              ref={expDateRef}
               type="text"
               onChange={(e) => {
                 setExpDate(e.target.value);
