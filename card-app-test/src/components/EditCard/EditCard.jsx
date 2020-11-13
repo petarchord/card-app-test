@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
 import Card from "../Card/Card";
-import styles from "./AddCard.module.scss";
+import styles from "./EditCard.module.scss";
 import { useHistory } from "react-router-dom";
 
-const AddCard = () => {
+const EditCard = () => {
   const history = useHistory();
+  const cardDataEdit = JSON.parse(localStorage.getItem("cardData"));
   const userNameRef = useRef();
   const firstDigitsRef = useRef();
   const secondDigitsRef = useRef();
@@ -31,16 +32,16 @@ const AddCard = () => {
     history.push("/");
   };
 
-  const [cardType, setCardType] = useState(0); //0-visa 1-master 2-discover
-  const [firstDigits, setFirstDigits] = useState("0000");
-  const [secondDigits, setSecondDigits] = useState("0000");
-  const [thirdDigits, setThirdDigits] = useState("0000");
-  const [fourthDigits, setFourthDigits] = useState("0000");
-  const [userName, setUserName] = useState("USER NAME");
-  const [expDate, setExpDate] = useState("20/07");
+  const [cardType, setCardType] = useState(cardDataEdit.cardType); //0-visa 1-master 2-discover
+  const [firstDigits, setFirstDigits] = useState(cardDataEdit.firstDigits);
+  const [secondDigits, setSecondDigits] = useState(cardDataEdit.secondDigits);
+  const [thirdDigits, setThirdDigits] = useState(cardDataEdit.thirdDigits);
+  const [fourthDigits, setFourthDigits] = useState(cardDataEdit.fourthDigits);
+  const [userName, setUserName] = useState(cardDataEdit.userName);
+  const [expDate, setExpDate] = useState(cardDataEdit.expDate);
   return (
     <div className={styles.container}>
-      <h3>Add card to account</h3>
+      <h3>Edit current card</h3>
       <Card
         cardType={cardType}
         setCardType={setCardType}
@@ -149,4 +150,4 @@ const AddCard = () => {
   );
 };
 
-export default AddCard;
+export default EditCard;
